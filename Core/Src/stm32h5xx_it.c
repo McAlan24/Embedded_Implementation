@@ -56,6 +56,7 @@ extern UART_HandleTypeDef huart3;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern ADC_HandleTypeDef hadc1;
 extern I2C_HandleTypeDef hi2c1;
 extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef htim7;
@@ -232,6 +233,20 @@ void EXTI13_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles ADC1 global interrupt.
+  */
+void ADC1_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_IRQn 0 */
+
+  /* USER CODE END ADC1_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_IRQn 1 */
+
+  /* USER CODE END ADC1_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM6 global interrupt.
   */
 void TIM6_IRQHandler(void)
@@ -317,5 +332,18 @@ void UART5_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 
+#include "shell_terminal.h"
+
+/**
+ * @brief UART receive complete callback
+ * @param huart: UART handle
+ */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == UART4) {
+        // Handle shell terminal input
+        Shell_UART_RxCallback();
+    }
+}
 
 /* USER CODE END 1 */
