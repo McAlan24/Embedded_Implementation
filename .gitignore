@@ -1,0 +1,4 @@
+# files that needs to be ignored all axcept the Core files.
+!.gitignore 
+!/Core/
+!/Core?**
